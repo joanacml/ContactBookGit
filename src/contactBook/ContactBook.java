@@ -20,6 +20,14 @@ public class ContactBook {
         return searchIndex(name) >= 0;
     }
 
+    /**
+     * @param number a phone number
+     * @return true if number exists, false otherwise
+     */
+    public boolean hasNumber(int number) {
+        return searchIndexNumber(number) >= 0;
+    }
+
     public int getNumberOfContacts() {
         return counter;
     }
@@ -39,8 +47,8 @@ public class ContactBook {
     //Pre: name != null && hasContact(name)
     public void deleteContact(String name) {
         int index = searchIndex(name);
-        for(int i=index; i<counter; i++)
-            contacts[i] = contacts[i+1];
+        for (int i = index; i < counter; i++)
+            contacts[i] = contacts[i + 1];
         counter--;
     }
 
@@ -64,11 +72,38 @@ public class ContactBook {
         contacts[searchIndex(name)].setEmail(email);
     }
 
+    /**
+     * new
+     *
+     * @param number a phone number
+     * @return the name of the contact given a phone number
+     */
+    public String getName(int number) {
+        return contacts[searchIndexNumber(number)].getName();
+    }
+
+    /**
+     * @param number searches by phone number
+     * @return the index of a contact if it exists, given a phone number
+     */
+    private int searchIndexNumber(int number) {
+        int i = 0;
+        int result = -1;
+        boolean found = false;
+        while (i < counter && !found)
+            if (contacts[i].getPhone() == number)
+                found = true;
+            else
+                i++;
+        if (found) result = i;
+        return result;
+    }
+
     private int searchIndex(String name) {
         int i = 0;
         int result = -1;
         boolean found = false;
-        while (i<counter && !found)
+        while (i < counter && !found)
             if (contacts[i].getName().equals(name))
                 found = true;
             else
@@ -78,8 +113,8 @@ public class ContactBook {
     }
 
     private void resize() {
-        Contact tmp[] = new Contact[2*contacts.length];
-        for (int i=0;i<counter; i++)
+        Contact tmp[] = new Contact[2 * contacts.length];
+        for (int i = 0; i < counter; i++)
             tmp[i] = contacts[i];
         contacts = tmp;
     }
@@ -89,12 +124,29 @@ public class ContactBook {
     }
 
     public boolean hasNext() {
-        return (currentContact >= 0 ) && (currentContact < counter);
+        return (currentContact >= 0) && (currentContact < counter);
+    }
+    //new
+
+    /**
+     * @return true if there are contacts that share phone numbers
+     */
+    public boolean hasRepeatedPhone() {
+        if (getNumberOfContacts() == 0)
+            return false;
+        for (int i = 0; i < counter; i++) {
+            for (int j = i + 1; j < counter; j++) {
+                if (contacts[i].getPhone() == contacts[j].getPhone())
+                    return true;
+            }
+        }
+        return false;
     }
 
     //Pre: hasNext()
     public Contact next() {
         return contacts[currentContact++];
     }
+
 
 }
