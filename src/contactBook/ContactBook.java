@@ -125,7 +125,7 @@ public class ContactBook {
     //new
 
     /**
-     * @return true if there are contacts that share phone numbers
+     * @return true if there are contacts that share phone number
      */
     public boolean hasRepeatedPhone() {
         if (getNumberOfContacts() == 0)
