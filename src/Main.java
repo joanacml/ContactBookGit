@@ -168,6 +168,9 @@ public class Main {
 
     //new
     private static void equalPhone(ContactBook cBook) {
-        //TODO
+        if (cBook.hasRepeatedPhone())
+        System.out.println(EQUAL_PHONE );
+        else System.out.println(DIFF_PHONE);
+
     }
 }
