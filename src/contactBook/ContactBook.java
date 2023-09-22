@@ -32,10 +32,6 @@ public class ContactBook {
         return counter;
     }
 
-    public boolean isOverHundred() {
-        return getNumberOfContacts() >= 100;
-    }
-
     //Pre: name!= null && !hasContact(name)
     public void addContact(String name, int phone, String email) {
         if (counter == contacts.length)
